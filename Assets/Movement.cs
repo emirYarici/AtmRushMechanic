@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class Movement : MonoBehaviour
 {
     public float forwardMoveSpeed;
@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     {
         cam = Camera.main;
         firstCube = Collect.Instance.stack[0];
+        Debug.Log(firstCube);
     }
 
     // Update is called once per frame
@@ -24,6 +25,6 @@ public class Movement : MonoBehaviour
         
         Vector3 pos = firstCube.transform.localPosition;
         pos.x -= horizontalInput * horizontalSpeed * Time.deltaTime;
-        firstCube.transform.localPosition = Vector3.Lerp(firstCube.transform.localPosition, pos, Time.deltaTime);
+        firstCube.transform.DOLocalMoveX(pos.x, Time.deltaTime);
     }
 }

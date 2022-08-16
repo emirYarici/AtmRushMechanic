@@ -8,7 +8,7 @@ public class Collect : MonoBehaviour
     public float movementDelay = 0.25f;
     public  List<GameObject> stack = new List<GameObject>();
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if(Instance == null)
         {
