@@ -51,8 +51,8 @@ public class Collect : MonoBehaviour
             scale *= 1.5f;//make 1.5x bigger
 
             stack[index].transform.DOScale(scale, 0.1f).OnComplete(() =>
-            stack[index].transform.DOScale(new Vector3(1, 1, 1), 0.1f));
-            yield return new WaitForSeconds(0.05f);
+            stack[index].transform.DOScale(new Vector3(5, 5, 5), 0.1f));
+            yield return new WaitForSeconds(0.10f);
                 
         }
     }

@@ -10,15 +10,19 @@ public class CollisionWithWall : MonoBehaviour
     {
         if (other.transform.CompareTag("CollectedBall"))
         {
-            GameObject created_ball = Instantiate(Ball,gameObject.transform);
-            other.GetComponent<BoxCollider>().isTrigger = false;
-            created_ball.transform.tag = "CollectedBall";
-            created_ball.AddComponent<CollisionWithBall>();
-            created_ball.AddComponent<CollisionWithWall>();
-            created_ball.AddComponent<Rigidbody>();
-            created_ball.GetComponent<Rigidbody>().isKinematic = true;
-            Collect.Instance.Stack(created_ball, Collect.Instance.stack.Count - 1);
-            
+                GameObject currentCreatedBall = Instantiate(Ball,transform);
+                InstantiateBall(currentCreatedBall);
         }
+    }
+
+    private void InstantiateBall(GameObject ball)
+    {
+        ball.GetComponent<SphereCollider>().isTrigger = false;
+        ball.transform.tag = "CollectedBall";
+        ball.AddComponent<CollisionWithBall>();
+        ball.AddComponent<CollisionWithWall>();
+        ball.AddComponent<Rigidbody>();
+        ball.GetComponent<Rigidbody>().isKinematic = true;
+        Collect.Instance.Stack(ball, Collect.Instance.stack.Count - 1);
     }
 }
