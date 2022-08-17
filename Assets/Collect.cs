@@ -19,14 +19,16 @@ public class Collect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(Input.GetAxis("Horizontal") == 0)
-        {
-            NormalizeStackPositions();
-        }
-        else
-        {
-            MoveListElements();
-        }
+        
+            if(Input.GetAxis("Horizontal") == 0)
+            {
+                NormalizeStackPositions();
+            }
+            else
+            {
+                MoveListElements();
+            }
+        //MoveListElements(); Eðer öndeki toplarýn bir ando saða veya sola geçmesi istenmiyorsa 
     }
 
     public void Stack(GameObject collectedObject, int index)
@@ -73,6 +75,7 @@ public class Collect : MonoBehaviour
             Vector3 pos = stack[i].transform.localPosition;
             pos.x = stack[0].transform.localPosition.x;
             stack[i].transform.DOLocalMove(pos, 0.70f);
+
         }
     }
 }

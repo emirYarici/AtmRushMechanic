@@ -18,6 +18,7 @@ public class CollisionWithBall : MonoBehaviour
                 other.GetComponent<BoxCollider>().isTrigger = false;
                 other.gameObject.transform.tag = "CollectedBall";
                 other.gameObject.AddComponent<CollisionWithBall>();
+                other.gameObject.AddComponent<CollisionWithWall>();
                 other.gameObject.AddComponent<Rigidbody>();
                 other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 Collect.Instance.Stack(other.gameObject, Collect.Instance.stack.Count- 1);
