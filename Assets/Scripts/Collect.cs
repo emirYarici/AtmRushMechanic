@@ -7,6 +7,7 @@ public class Collect : MonoBehaviour
     public static Collect Instance;
     public float movementDelay = 0.25f;
     public  List<GameObject> stack = new List<GameObject>();
+    public bool isOnFinishLine = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -19,8 +20,9 @@ public class Collect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-            if(Input.GetAxis("Horizontal") == 0)
+        if (isOnFinishLine == false)
+        {
+            if (Input.GetAxis("Horizontal") == 0)
             {
                 NormalizeStackPositions();
             }
@@ -28,13 +30,14 @@ public class Collect : MonoBehaviour
             {
                 MoveListElements();
             }
+        }
         //MoveListElements(); Eðer öndeki toplarýn bir ando saða veya sola geçmesi istenmiyorsa 
     }
 
     public void Stack(GameObject collectedObject, int index)
     {
-        Debug.Log("giriyomu");
-        collectedObject.transform.parent = transform;//make collected object go under this parent
+
+        collectedObject.transform.SetParent(transform);//make collected object go under this parent
         Vector3 newpos = stack[index].transform.localPosition;
         newpos.z -= 1;//scale 1, bu nedenle 1 adým öne atarsa tam olur
         collectedObject.transform.localPosition = newpos;
@@ -47,7 +50,7 @@ public class Collect : MonoBehaviour
         for( int i = stack.Count-1; i > 0; i--)
         {
             int index = i;
-            Vector3 scale = new Vector3(1, 1, 1);//þu anki scale
+            Vector3 scale = new Vector3(5, 5, 5);//þu anki scale
             scale *= 1.5f;//make 1.5x bigger
 
             stack[index].transform.DOScale(scale, 0.1f).OnComplete(() =>
@@ -68,7 +71,7 @@ public class Collect : MonoBehaviour
         }
     }
 
-    private void NormalizeStackPositions()
+    public void NormalizeStackPositions()
     {
         for (int i = 1; i < stack.Count; i++)
         {
@@ -78,4 +81,11 @@ public class Collect : MonoBehaviour
 
         }
     }
+    public void DeleteLastElement(GameObject other)
+    {
+
+        stack.Remove(other);
+        
+    }
+
 }

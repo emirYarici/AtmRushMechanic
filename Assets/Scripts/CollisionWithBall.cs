@@ -15,7 +15,7 @@ public class CollisionWithBall : MonoBehaviour
             if (!Collect.Instance.stack.Contains(other.gameObject))
             {
                 
-                other.GetComponent<SphereCollider>().isTrigger = false;
+                //other.GetComponent<SphereCollider>().isTrigger = false;
                 other.gameObject.transform.tag = "CollectedBall";
                 other.gameObject.AddComponent<CollisionWithBall>();
                 other.gameObject.AddComponent<Rigidbody>();
@@ -24,4 +24,6 @@ public class CollisionWithBall : MonoBehaviour
             }
         }
     }
+   
+
 }
