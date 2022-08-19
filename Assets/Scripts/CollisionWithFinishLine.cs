@@ -20,13 +20,14 @@ public class CollisionWithFinishLine : MonoBehaviour
             Debug.Log("girdi");
             StartCoroutine( WaitAndSendLeft(other.gameObject));
             Collect.Instance.isOnFinishLine = true;
-            waitTime += 0.5f;
+            waitTime += 0.2f;
+            Movement.Instance.StopSideMovement();
 
         }
 
         if(other.transform.tag == "Player")
         {
-            Movement.Instance.StopMovement();
+            Movement.Instance.StopForwardMovement();
         }
     }
 

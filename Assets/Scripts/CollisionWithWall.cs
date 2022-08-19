@@ -20,7 +20,6 @@ public class CollisionWithWall : MonoBehaviour
         //ball.GetComponent<SphereCollider>().isTrigger = false;
         ball.transform.tag = "CollectedBall";
         ball.AddComponent<CollisionWithBall>();
-       
         ball.AddComponent<Rigidbody>();
         ball.GetComponent<Rigidbody>().isKinematic = true;
         Collect.Instance.Stack(ball, Collect.Instance.stack.Count - 1);

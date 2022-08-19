@@ -9,7 +9,8 @@ public class Movement : MonoBehaviour
     private Camera cam;
     float horizontalInput;
     GameObject firstCube;
-    private bool stopMovement = false;
+    private bool stopForwardMovement = false;
+    private bool stopSideMovement = false;
     public static Movement Instance ;
     // Start is called before the first frame update
     private void Awake()
@@ -30,21 +31,30 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(stopMovement);
-        if (stopMovement == false)
+
+        if (stopForwardMovement == false)
         {
             transform.position -= Vector3.forward * forwardMoveSpeed * Time.deltaTime;//regular go forward
+        }
+        if(stopSideMovement == false) {
             horizontalInput = Input.GetAxis("Horizontal");
             Vector3 pos = firstCube.transform.localPosition;
             pos.x -= horizontalInput * horizontalSpeed * Time.deltaTime;
             firstCube.transform.DOLocalMoveX(pos.x, Time.deltaTime);
         }
+            
+        
     }
 
-    public void StopMovement()
+    public void StopForwardMovement()
     {
-        stopMovement = true;
+        stopForwardMovement = true;
         Collect.Instance.NormalizeStackPositions();
+    }
+    public void StopSideMovement()
+    {
+        stopSideMovement = true;
+        
     }
     public void OneStepForward()
     {
