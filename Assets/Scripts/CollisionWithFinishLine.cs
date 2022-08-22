@@ -7,7 +7,7 @@ public class CollisionWithFinishLine : MonoBehaviour
 {
 
     [SerializeField]Transform endStackPos;
-
+    [SerializeField] GameObject rotator;
     float waitTime = 0f;
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
@@ -15,7 +15,7 @@ public class CollisionWithFinishLine : MonoBehaviour
         if (other.transform.tag == "CollectedBall")
 
         {
-
+            Collect.Instance.NormalizeStackPositions();
             Collect.Instance.DeleteLastElement(other.gameObject);
             Debug.Log("girdi");
             StartCoroutine( WaitAndSendLeft(other.gameObject));
@@ -28,6 +28,7 @@ public class CollisionWithFinishLine : MonoBehaviour
         if(other.transform.tag == "Player")
         {
             Movement.Instance.StopForwardMovement();
+            rotator.SetActive(true);
         }
     }
 
