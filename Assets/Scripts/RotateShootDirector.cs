@@ -4,27 +4,55 @@ using UnityEngine;
 using DG.Tweening;
 public class RotateShootDirector : MonoBehaviour
 {
-    Vector3 leftLimit = new Vector3(0, -15, 0);
-    Vector3 rightLimit = new Vector3(0, 15, 0);
-    float randomXValue1;
-    float randomXValue2;
+    Vector3 start_pos;
+
+    Vector3 cursor_pos;
+    Vector3 rotate_direction_horizontal = new Vector3(0,0,0);
+    public enum PLATFORM { PC, MOBILE };
+    [SerializeField] PLATFORM platform = PLATFORM.PC; // Controll type
     // Start is called before the first frame update
 
-    private void Start()
+    private void Update()
     {
-        Rotate();
-        randomXValue1 = Random.Range(0, 25);
-        randomXValue2 = Random.Range(0, 25);
+        if (platform == PLATFORM.PC)
+        {
+            cursor_pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) * 900; // Instead of getting pixels, we are getting viewport coordinates which is resolution independent
+        }
+        else
+        {
+            if (Input.touchCount > 0) cursor_pos = Camera.main.ScreenToViewportPoint(Input.GetTouch(0).position) * 900; // Instead of getting pixels, we are getting viewport coordinates which is resolution independent
+        }
+        
+
+        
+
+            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
+            { // This is actions when finger/cursor hit screen
+                start_pos = cursor_pos;
+            }
+            if ((Input.touchCount > 0 && (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved)) || Input.GetMouseButton(0))
+            { // This is actions when finger/cursor pressed on screen
+                Move(cursor_pos);
+            }
+            if (((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp(0)))
+            { // This is actions when finger/cursor get out from screen
+                    
+            }
+
+        
     }
- 
-    public void Rotate()
+
+    public void Move(Vector3 cursor_pos)
     {
-        rightLimit.x=randomXValue1;
-        leftLimit.x = randomXValue2;
-        gameObject.transform.DOLocalRotate(rightLimit, 2f).OnComplete(() =>
-        gameObject.transform.DOLocalRotate(leftLimit, 2f).OnComplete(() => Rotate()));
-        randomXValue1 = Random.Range(0, 25);
-        randomXValue2 = Random.Range(0, 25);
+        Vector3 rotation;
+        rotation.x = Mathf.Abs((start_pos - cursor_pos).y / 10);
+        rotation.y = -(start_pos - cursor_pos).x/10;
+        rotation.z = gameObject.transform.localRotation.z;
+        gameObject.transform.DOLocalRotate(rotation, 0.1f);
     }
-    }
+
+  
+
+
+}
 

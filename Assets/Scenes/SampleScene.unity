@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 478235438}
   - component: {fileID: 478235437}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ShootDirector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -617,6 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f1c0f7dfdae0e148b8e6c12a75544a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platform: 0
 --- !u!65 &478235438
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -687,8 +688,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478235436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3000002, y: 0, z: -157.09262}
-  m_LocalScale: {x: 1.0922003, y: 0.0409, z: 4.7398024}
+  m_LocalPosition: {x: 0.3000002, y: 0, z: -131.3}
+  m_LocalScale: {x: 1.0922003, y: 0.0409, z: 9.909504}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
@@ -2286,6 +2287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endStackPos: {fileID: 1075294749}
+  rotator: {fileID: 478235436}
 --- !u!64 &1957626634
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2357,7 +2359,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957626632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.13999999, y: 0.01, z: -154.97003}
+  m_LocalPosition: {x: -0.13999999, y: 0.01, z: -129.17741}
   m_LocalScale: {x: 1.9018443, y: 8.58017, z: 0.40060207}
   m_Children: []
   m_Father: {fileID: 0}

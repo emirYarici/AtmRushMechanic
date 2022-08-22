@@ -22,7 +22,7 @@ public class Collect : MonoBehaviour
     {
         if (isOnFinishLine == false)
         {
-            if (Input.GetAxis("Horizontal") == 0)
+            if (Movement.Instance.isTouching == false)
             {
                 NormalizeStackPositions();
             }
