@@ -88,4 +88,37 @@ public class Collect : MonoBehaviour
         
     }
 
+    public float GetLastElementIndex()
+    {
+        return stack.Count-1;
+    }
+
+    public void GotoFirstBallsPosition()
+    {
+        for (int i = stack.Count-1; i > 0; i--)
+        {
+            stack[i].transform.localPosition = stack[1].transform.localPosition;
+            stack[i].transform.tag = "OnFinishLine";
+        }
+
+        //Movement.Instance.AllowForwardMovement();
+    }
+
+    public IEnumerator KickTheBalls()
+    {
+        for (int i = 1; i < stack.Count;i++)
+
+        {
+            yield return new WaitForSeconds(1);
+            int index = i;
+            Debug.Log("hadi la artýk ");
+            GameObject currentBall = stack[index];
+            currentBall.gameObject.GetComponent<SphereCollider>().isTrigger = false;
+            currentBall.GetComponent<Rigidbody>().isKinematic = false;
+            currentBall.GetComponent<Rigidbody>().AddForce(-transform.forward * 200);
+            
+        }
+    }
+
+
 }

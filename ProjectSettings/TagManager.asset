@@ -8,6 +8,7 @@ TagManager:
   - CollectedBall
   - FinishLine
   - ReadyToStack
+  - OnFinishLine
   layers:
   - Default
   - TransparentFX

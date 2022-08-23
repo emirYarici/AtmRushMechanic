@@ -17,7 +17,7 @@ public class CollisionWithWall : MonoBehaviour
 
     private void InstantiateBall(GameObject ball)
     {
-        //ball.GetComponent<SphereCollider>().isTrigger = false;
+        
         ball.transform.tag = "CollectedBall";
         ball.AddComponent<CollisionWithBall>();
         ball.AddComponent<Rigidbody>();

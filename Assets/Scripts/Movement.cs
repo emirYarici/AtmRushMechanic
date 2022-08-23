@@ -84,21 +84,20 @@ public class Movement : MonoBehaviour
 
 
 
-    public void StopForwardMovement()
+
+
+    public void AllowForwardMovement()
     {
-        stopForwardMovement = true;
-        Collect.Instance.NormalizeStackPositions();
-    }
-    public void StopSideMovement()
-    {
-        stopSideMovement = true;
+        stopForwardMovement = false;
         
     }
-    public void OneStepForward()
+
+    public void StopMovement(Vector3 finishLinePosition)
     {
-        Vector3 newpos = transform.localPosition;
-        newpos.z -= 1;//scale 1, bu nedenle 1 adým öne atarsa tam olur
-        transform.localPosition = newpos;
+        stopSideMovement = true;
+        stopForwardMovement = true;
+        transform.DOLocalMoveX(6, 2f).OnComplete(() =>StartCoroutine( Collect.Instance.KickTheBalls())) ; 
+
     }
 
     public void HorizontalMove(Vector3 cursor_pos)
@@ -107,5 +106,7 @@ public class Movement : MonoBehaviour
         pos.x = (start_pos - cursor_pos).x/50;
         firstCube.transform.DOLocalMoveX(pos.x, Time.deltaTime);
     }
+
+   
    
 }

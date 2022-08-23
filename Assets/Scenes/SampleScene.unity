@@ -551,6 +551,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardMoveSpeed: 8.45
   horizontalSpeed: 15
+  isTouching: 0
+  platform: 0
 --- !u!4 &367888332
 Transform:
   m_ObjectHideFlags: 0
@@ -604,7 +606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &478235437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,7 +690,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478235436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3000002, y: 0, z: -131.3}
+  m_LocalPosition: {x: 0, y: 0, z: -131.3}
   m_LocalScale: {x: 1.0922003, y: 0.0409, z: 9.909504}
   m_Children: []
   m_Father: {fileID: 0}
