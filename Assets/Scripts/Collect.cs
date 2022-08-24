@@ -93,32 +93,42 @@ public class Collect : MonoBehaviour
         return stack.Count-1;
     }
 
-    public void GotoFirstBallsPosition()
+    public void GotoFirstBallsPosition(GameObject rotator)
     {
         for (int i = stack.Count-1; i > 0; i--)
         {
+            
             stack[i].transform.localPosition = stack[1].transform.localPosition;
             stack[i].transform.tag = "OnFinishLine";
+            Debug.Log(stack[i].transform.localPosition);
         }
-
-        //Movement.Instance.AllowForwardMovement();
+        
+        transform.DOLocalMoveX(rotator.transform.position.x, 2f).OnComplete(() => StartCoroutine(Collect.Instance.KickTheBalls(rotator)));
     }
 
-    public IEnumerator KickTheBalls()
+    public IEnumerator KickTheBalls(GameObject rotator)
     {
+        //Collect.Instance.NormalizeStackPositions();
+        rotator.SetActive(true);
         for (int i = 1; i < stack.Count;i++)
 
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             int index = i;
-            Debug.Log("hadi la artýk ");
+         
             GameObject currentBall = stack[index];
             currentBall.gameObject.GetComponent<SphereCollider>().isTrigger = false;
             currentBall.GetComponent<Rigidbody>().isKinematic = false;
-            currentBall.GetComponent<Rigidbody>().AddForce(-transform.forward * 200);
-            
+            /*RotateShootDirector.Instance.rotation.z = -10;
+            Debug.Log(RotateShootDirector.Instance.rotation);
+            currentBall.GetComponent<Rigidbody>().AddForce(RotateShootDirector.Instance.rotation * 30);*/
+            Vector3 direction = rotator.transform.localPosition;
+            Debug.Log(RotateShootDirector.Instance.rotation);
+            direction.x -= RotateShootDirector.Instance.rotation.y;
+            direction.y += RotateShootDirector.Instance.rotation.x;
+            direction.z -= 50;
+
+            currentBall.GetComponent<Rigidbody>().AddForce(direction * 30);
         }
     }
-
-
 }

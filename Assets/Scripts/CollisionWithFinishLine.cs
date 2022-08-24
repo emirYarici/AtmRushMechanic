@@ -19,9 +19,7 @@ public class CollisionWithFinishLine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "CollectedBall")
-
         {
-
             /*
              *  Collect.Instance.NormalizeStackPositions();
              //Collect.Instance.DeleteLastElement(other.gameObject);
@@ -30,18 +28,14 @@ public class CollisionWithFinishLine : MonoBehaviour
              Collect.Instance.isOnFinishLine = true;
              waitTime += 0.05f;
              Movement.Instance.StopSideMovement();*/
-
-
-
          }
 
          if(other.transform.tag == "Player")
          {
-             Movement.Instance.StopMovement(rotator.gameObject.transform.position);
-             Collect.Instance.GotoFirstBallsPosition();
-             Collect.Instance.isOnFinishLine = true;
+            Movement.Instance.StopMovement();
+            Collect.Instance.GotoFirstBallsPosition(rotator);
+            Collect.Instance.isOnFinishLine = true;
              Collect.Instance.NormalizeStackPositions();
-             rotator.SetActive(true);
          }
      }
 

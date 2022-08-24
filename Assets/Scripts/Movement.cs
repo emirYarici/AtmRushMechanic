@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     Vector3 cursor_pos;
     Vector3 start_pos;
     public bool isTouching=false;
+    public GameObject EndLine;
     public enum PLATFORM { PC, MOBILE };
     [SerializeField] PLATFORM platform = PLATFORM.PC;
     public static Movement Instance ;
@@ -86,18 +87,14 @@ public class Movement : MonoBehaviour
 
 
 
-    public void AllowForwardMovement()
-    {
-        stopForwardMovement = false;
-        
-    }
+ 
 
-    public void StopMovement(Vector3 finishLinePosition)
+    public void StopMovement()
     {
         stopSideMovement = true;
         stopForwardMovement = true;
-        transform.DOLocalMoveX(6, 2f).OnComplete(() =>StartCoroutine( Collect.Instance.KickTheBalls())) ; 
-
+        
+        
     }
 
     public void HorizontalMove(Vector3 cursor_pos)
@@ -105,6 +102,9 @@ public class Movement : MonoBehaviour
         Vector3 pos = firstCube.transform.localPosition;
         pos.x = (start_pos - cursor_pos).x/50;
         firstCube.transform.DOLocalMoveX(pos.x, Time.deltaTime);
+        Vector3 Parentpos = transform.localPosition;
+        Parentpos.x = pos.x;
+        transform.localPosition = Parentpos;
     }
 
    

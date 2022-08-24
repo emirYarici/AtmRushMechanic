@@ -5,13 +5,20 @@ using DG.Tweening;
 public class RotateShootDirector : MonoBehaviour
 {
     Vector3 start_pos;
-
+    public static RotateShootDirector Instance = null;
     Vector3 cursor_pos;
     Vector3 rotate_direction_horizontal = new Vector3(0,0,0);
+    public Vector3 rotation;
     public enum PLATFORM { PC, MOBILE };
     [SerializeField] PLATFORM platform = PLATFORM.PC; // Controll type
     // Start is called before the first frame update
-
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
     private void Update()
     {
         if (platform == PLATFORM.PC)
@@ -44,7 +51,6 @@ public class RotateShootDirector : MonoBehaviour
 
     public void Move(Vector3 cursor_pos)
     {
-        Vector3 rotation;
         rotation.x = Mathf.Abs((start_pos - cursor_pos).y / 10);
         rotation.y = -(start_pos - cursor_pos).x/10;
         rotation.z = gameObject.transform.localRotation.z;
