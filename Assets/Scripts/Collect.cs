@@ -102,13 +102,21 @@ public class Collect : MonoBehaviour
             stack[i].transform.tag = "OnFinishLine";
             Debug.Log(stack[i].transform.localPosition);
         }
-        
-        transform.DOLocalMoveX(rotator.transform.position.x, 2f).OnComplete(() => StartCoroutine(Collect.Instance.KickTheBalls(rotator)));
+        isOnFinishLine = false;
+
+
+        transform.DOLocalMoveX(0, 2).OnComplete(() => StartCoroutine(KickTheBalls(rotator)));
     }
 
     public IEnumerator KickTheBalls(GameObject rotator)
     {
-        //Collect.Instance.NormalizeStackPositions();
+        
+        for (int i = 0; i< stack.Count; i++)
+        {
+            stack[i].transform.DOLocalMoveX(0, 0.70f);
+        }
+
+        
         rotator.SetActive(true);
         for (int i = 1; i < stack.Count;i++)
 
