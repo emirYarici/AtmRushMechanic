@@ -103,9 +103,8 @@ public class Collect : MonoBehaviour
             Debug.Log(stack[i].transform.localPosition);
         }
         isOnFinishLine = false;
-
-
-        transform.DOLocalMoveX(0, 2).OnComplete(() => StartCoroutine(KickTheBalls(rotator)));
+        transform.DOLocalMoveX(0,0.70f).OnComplete(() => StartCoroutine(KickTheBalls(rotator)));
+        
     }
 
     public IEnumerator KickTheBalls(GameObject rotator)

@@ -97,12 +97,12 @@ public class Movement : MonoBehaviour
        
         Vector3 pos = firstCube.transform.localPosition;
         pos.x = (start_pos - cursor_pos).x/50;
-        if (pos.x >= 4.15f) { pos.x = 4.15f; }
-        if (pos.x <= -4.15f) { pos.x = -4.15f; }
+        if (pos.x >= 8.15f) { pos.x = 8.15f; }
+        if (pos.x <= -8.15f) { pos.x = -8.15f; }
         firstCube.transform.DOLocalMoveX(pos.x, Time.deltaTime);
-        Vector3 Parentpos = transform.localPosition;
-        Parentpos.x = pos.x;
-        transform.localPosition = Parentpos;
+        Vector3 Parentpos = transform.position;
+        Parentpos.x = 0;
+        transform.position = Parentpos;
     }
 
    
