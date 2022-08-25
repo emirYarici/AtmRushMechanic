@@ -7,7 +7,6 @@ public class Movement : MonoBehaviour
     public float forwardMoveSpeed;
     public float horizontalSpeed;
     private Camera cam;
-    float horizontalInput;
     GameObject firstCube;
     private bool stopForwardMovement = false;
     private bool stopSideMovement = false;
@@ -31,13 +30,11 @@ public class Movement : MonoBehaviour
     {
         cam = Camera.main;
         firstCube = Collect.Instance.stack[0];
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (platform == PLATFORM.PC)
         {
             cursor_pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) * 900; // Instead of getting pixels, we are getting viewport coordinates which is resolution independent
@@ -93,14 +90,15 @@ public class Movement : MonoBehaviour
     {
         stopSideMovement = true;
         stopForwardMovement = true;
-        
-        
     }
 
     public void HorizontalMove(Vector3 cursor_pos)
     {
+       
         Vector3 pos = firstCube.transform.localPosition;
         pos.x = (start_pos - cursor_pos).x/50;
+        if (pos.x >= 4.15f) { pos.x = 4.15f; }
+        if (pos.x <= -4.15f) { pos.x = -4.15f; }
         firstCube.transform.DOLocalMoveX(pos.x, Time.deltaTime);
         Vector3 Parentpos = transform.localPosition;
         Parentpos.x = pos.x;
