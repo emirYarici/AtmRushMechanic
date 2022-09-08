@@ -8,6 +8,8 @@ public class Collect : MonoBehaviour
     public float movementDelay = 0.25f;
     public  List<GameObject> stack = new List<GameObject>();
     public bool isOnFinishLine = false;
+    public float[] forceAmount = { 1,2,3 };
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,7 +39,7 @@ public class Collect : MonoBehaviour
     public void Stack(GameObject collectedObject, int index)
     {
 
-        collectedObject.transform.SetParent(transform);//make collected object go under this parent
+        collectedObject.transform.SetParent(transform,false);//make collected object go under this parent
         Vector3 newpos = stack[index].transform.localPosition;
         newpos.z -= 1;//scale 1, bu nedenle 1 adým öne atarsa tam olur
         collectedObject.transform.localPosition = newpos;
@@ -97,7 +99,6 @@ public class Collect : MonoBehaviour
     {
         for (int i = stack.Count-1; i > 0; i--)
         {
-            
             stack[i].transform.localPosition = stack[1].transform.localPosition;
             stack[i].transform.tag = "OnFinishLine";
             Debug.Log(stack[i].transform.localPosition);
@@ -106,7 +107,7 @@ public class Collect : MonoBehaviour
         transform.DOLocalMoveX(0,0.70f).OnComplete(() => StartCoroutine(KickTheBalls(rotator)));
         
     }
-
+    
     public IEnumerator KickTheBalls(GameObject rotator)
     {
         
@@ -137,5 +138,48 @@ public class Collect : MonoBehaviour
 
             currentBall.GetComponent<Rigidbody>().AddForce(direction * 30);
         }
+    }
+    public IEnumerator EmptyStackSpread()
+    {
+        
+        for(int i = stack.Count-1; i>1 ; i--)
+        {
+            
+            GameObject ball = stack[i];
+            stack.RemoveAt(i);
+            Vector3 targetpos = ball.transform.position;
+            targetpos.z += transform.position.z; //+ball.transform.localPosition.z;
+
+            ball.transform.tag = "CollectableBall";
+
+            ball.transform.parent = null;
+            yield return new WaitForEndOfFrame();
+            ball.transform.position = targetpos;
+            Debug.Log(ball.transform.position);
+
+          ;
+            /*
+             *   
+             * 
+             * 
+             * 
+             * 
+             * Vector3 targetedPos = stack[i].transform.localPosition;
+            
+            if (i%2 == 0)//force left
+            {
+                targetedPos.x += 3;
+            }
+            else
+            {
+                targetedPos.x -= 3;
+            }
+            stack[i].transform.DOLocalJump(targetedPos, 2, 1, 1);
+            */
+            
+        }
+        
+        //Movement.Instance.stopForwardMovement = false;
+
     }
 }
