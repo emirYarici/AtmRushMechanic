@@ -27,7 +27,7 @@ public class Collect : MonoBehaviour
         
         if (isOnFinishLine == false)
         {
-            if (Movement.Instance.isTouching == false)
+            if (Movement.Instance.isTouching == false )
             {
                 NormalizeStackPositions();
             }
@@ -41,10 +41,10 @@ public class Collect : MonoBehaviour
 
     public void Stack(GameObject collectedObject, int index)
     {
-
-        Vector3 pos = collectedObject.transform.position;
+        Vector3 pos = stack[index].transform.position;
         pos.z = stack[index].transform.position.z-2;
         collectedObject.transform.position = pos;
+        pos.y = 0;
         stack.Add(collectedObject);
         StartCoroutine(MakeObjectsDoMexicanWave());
     }
@@ -56,7 +56,6 @@ public class Collect : MonoBehaviour
             int index = i;
             Vector3 scale = new Vector3(5, 5, 5);//þu anki scale
             scale *= 1.5f;//make 1.5x bigger
-
             stack[index].transform.DOScale(scale, 0.1f).OnComplete(() =>
             stack[index].transform.DOScale(new Vector3(5, 5, 5), 0.1f));
             yield return new WaitForSeconds(0.10f);
@@ -91,7 +90,6 @@ public class Collect : MonoBehaviour
             Vector3 pos = stack[i].transform.localPosition;
             pos.x = stack[0].transform.localPosition.x;
             stack[i].transform.DOLocalMoveX(pos.x, 0.70f);
-
         }
     }
     public void DeleteLastElement(GameObject other)
@@ -158,13 +156,13 @@ public class Collect : MonoBehaviour
             GameObject ball = stack[i];
             stack.RemoveAt(i);
             ball.transform.tag = "CollectableBall";
+            ball.transform.DOScale(new Vector3(5, 5, 5),0.1f);
             Vector3 targetpos = ball.transform.position;
-            ball.transform.position = new Vector3(Random.Range(0, 6), targetpos.y, Random.Range(targetpos.z+20, targetpos.z));
-            Debug.Log(i );
-            Debug.Log(ball.transform.position);
-            stack.RemoveAt(i);
+            ball.transform.DOLocalJump( new Vector3(Random.Range(0, 6),0, Random.Range(targetpos.z, targetpos.z + 20)),0.5f,3,1f);
+            Destroy(ball.GetComponent<CollisionWithBall>());
+            Destroy(ball.GetComponent<Rigidbody>());
         }
         Movement.Instance.stopForwardMovement = false;
+        
     }
-
 }

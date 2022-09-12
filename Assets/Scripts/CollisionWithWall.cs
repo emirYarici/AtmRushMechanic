@@ -10,7 +10,7 @@ public class CollisionWithWall : MonoBehaviour
     {
         if (other.transform.CompareTag("CollectedBall"))
         {
-                GameObject currentCreatedBall = Instantiate(Ball,other.transform);
+                GameObject currentCreatedBall = Instantiate(Ball);
                 InstantiateBall(currentCreatedBall);
         }
     }
