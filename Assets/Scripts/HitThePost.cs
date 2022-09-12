@@ -12,6 +12,7 @@ public class HitThePost : MonoBehaviour
         {
             Movement.Instance.stopForwardMovement = true;
             Movement.Instance.GoBackAndSpread();
+            
            
         }
     }

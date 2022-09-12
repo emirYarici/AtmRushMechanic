@@ -10,14 +10,14 @@ public class CollisionWithWall : MonoBehaviour
     {
         if (other.transform.CompareTag("CollectedBall"))
         {
-                GameObject currentCreatedBall = Instantiate(Ball,transform);
+                GameObject currentCreatedBall = Instantiate(Ball,other.transform);
                 InstantiateBall(currentCreatedBall);
         }
     }
 
     private void InstantiateBall(GameObject ball)
     {
-        
+        Debug.Log("sa");
         ball.transform.tag = "CollectedBall";
         ball.AddComponent<CollisionWithBall>();
         ball.AddComponent<Rigidbody>();

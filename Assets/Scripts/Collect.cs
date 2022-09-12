@@ -9,7 +9,6 @@ public class Collect : MonoBehaviour
     public  List<GameObject> stack = new List<GameObject>();
     public bool isOnFinishLine = false;
     public float[] forceAmount = { 1,2,3 };
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -22,6 +21,10 @@ public class Collect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Movement.Instance.stopForwardMovement == false){
+            MoveListElementsForward();
+        }
+        
         if (isOnFinishLine == false)
         {
             if (Movement.Instance.isTouching == false)
@@ -39,10 +42,9 @@ public class Collect : MonoBehaviour
     public void Stack(GameObject collectedObject, int index)
     {
 
-        collectedObject.transform.SetParent(transform,false);//make collected object go under this parent
-        Vector3 newpos = stack[index].transform.localPosition;
-        newpos.z -= 1;//scale 1, bu nedenle 1 adým öne atarsa tam olur
-        collectedObject.transform.localPosition = newpos;
+        Vector3 pos = collectedObject.transform.position;
+        pos.z = stack[index].transform.position.z-2;
+        collectedObject.transform.position = pos;
         stack.Add(collectedObject);
         StartCoroutine(MakeObjectsDoMexicanWave());
     }
@@ -69,17 +71,26 @@ public class Collect : MonoBehaviour
         {
             Vector3 pos = stack[i].transform.localPosition;
             pos.x = stack[i - 1].transform.localPosition.x;
-            stack[i].transform.DOLocalMove(pos, movementDelay);
+            stack[i].transform.DOLocalMoveX(pos.x, movementDelay);
         }
     }
-
+    private void MoveListElementsForward()
+    {
+        for(int i = 1; i < stack.Count; i++)
+        {
+            Vector3 pos = stack[i].transform.position;
+            pos.z = stack[i - 1].transform.position.z-1;
+            stack[i].transform.position = pos;
+        }
+    }
+   
     public void NormalizeStackPositions()
     {
         for (int i = 1; i < stack.Count; i++)
         {
             Vector3 pos = stack[i].transform.localPosition;
             pos.x = stack[0].transform.localPosition.x;
-            stack[i].transform.DOLocalMove(pos, 0.70f);
+            stack[i].transform.DOLocalMoveX(pos.x, 0.70f);
 
         }
     }
@@ -119,7 +130,6 @@ public class Collect : MonoBehaviour
         
         rotator.SetActive(true);
         for (int i = 1; i < stack.Count;i++)
-
         {
             yield return new WaitForSeconds(2);
             int index = i;
@@ -139,47 +149,22 @@ public class Collect : MonoBehaviour
             currentBall.GetComponent<Rigidbody>().AddForce(direction * 30);
         }
     }
-    public IEnumerator EmptyStackSpread()
+    public void EmptyStackSpread()
     {
         
-        for(int i = stack.Count-1; i>1 ; i--)
+        for(int i = stack.Count-1; i>0 ; i--)
         {
             
             GameObject ball = stack[i];
             stack.RemoveAt(i);
-            Vector3 targetpos = ball.transform.position;
-            targetpos.z += transform.position.z; //+ball.transform.localPosition.z;
-
             ball.transform.tag = "CollectableBall";
-
-            ball.transform.parent = null;
-            yield return new WaitForEndOfFrame();
-            ball.transform.position = targetpos;
+            Vector3 targetpos = ball.transform.position;
+            ball.transform.position = new Vector3(Random.Range(0, 6), targetpos.y, Random.Range(targetpos.z+20, targetpos.z));
+            Debug.Log(i );
             Debug.Log(ball.transform.position);
-
-          ;
-            /*
-             *   
-             * 
-             * 
-             * 
-             * 
-             * Vector3 targetedPos = stack[i].transform.localPosition;
-            
-            if (i%2 == 0)//force left
-            {
-                targetedPos.x += 3;
-            }
-            else
-            {
-                targetedPos.x -= 3;
-            }
-            stack[i].transform.DOLocalJump(targetedPos, 2, 1, 1);
-            */
-            
+            stack.RemoveAt(i);
         }
-        
-        //Movement.Instance.stopForwardMovement = false;
-
+        Movement.Instance.stopForwardMovement = false;
     }
+
 }
