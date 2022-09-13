@@ -8,9 +8,9 @@ public class SlideActivation : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("CollectedBall"))
+        if (other.transform.CompareTag("Player"))
         {
-            slider.SetActive(true);
+            slider.GetComponent<EnemyPlayerManager>().StartSlidingTackle();
         }
     }
 }

@@ -32,8 +32,9 @@ public class CollisionWithFinishLine : MonoBehaviour
 
          if(other.transform.tag == "Player")
          {
-            Movement.Instance.StopMovement();
-            Collect.Instance.GotoFirstBallsPosition(rotator);
+            Movement.Instance.stopForwardMovement = true;
+            Movement.Instance.stopSideMovement = true;
+            StartCoroutine(Collect.Instance.GotoFirstBallsPosition(rotator));
             Collect.Instance.isOnFinishLine = true;
              Collect.Instance.NormalizeStackPositions();
          }

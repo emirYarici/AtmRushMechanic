@@ -25,8 +25,6 @@ public class Collect : MonoBehaviour
             MoveListElementsForward();
         }
         
-        if (isOnFinishLine == false)
-        {
             if (Movement.Instance.isTouching == false )
             {
                 NormalizeStackPositions();
@@ -35,7 +33,7 @@ public class Collect : MonoBehaviour
             {
                 MoveListElements();
             }
-        }
+        
         //MoveListElements(); Eðer öndeki toplarýn bir ando saða veya sola geçmesi istenmiyorsa 
     }
 
@@ -92,40 +90,31 @@ public class Collect : MonoBehaviour
             stack[i].transform.DOLocalMoveX(pos.x, 0.70f);
         }
     }
-    public void DeleteLastElement(GameObject other)
-    {
-
-        stack.Remove(other);
-        
-    }
+    
 
     public float GetLastElementIndex()
     {
         return stack.Count-1;
     }
 
-    public void GotoFirstBallsPosition(GameObject rotator)
+    public IEnumerator GotoFirstBallsPosition(GameObject rotator)
     {
         for (int i = stack.Count-1; i > 0; i--)
         {
-            stack[i].transform.localPosition = stack[1].transform.localPosition;
+            
+            stack[i].transform.DOLocalJump(new Vector3(0, 0, stack[1].transform.position.z), 1, 3, 2f);
             stack[i].transform.tag = "OnFinishLine";
-            Debug.Log(stack[i].transform.localPosition);
+            yield return new WaitForSeconds(0.5f);
         }
+
+        stack[0].transform.DOLocalJump(new Vector3(0, stack[0].transform.position.y, stack[0].transform.position.z), 1, 3, 2);
+        StartCoroutine(KickTheBalls(rotator));
         isOnFinishLine = false;
-        transform.DOLocalMoveX(0,0.70f).OnComplete(() => StartCoroutine(KickTheBalls(rotator)));
         
     }
     
     public IEnumerator KickTheBalls(GameObject rotator)
     {
-        
-        for (int i = 0; i< stack.Count; i++)
-        {
-            stack[i].transform.DOLocalMoveX(0, 0.70f);
-        }
-
-        
         rotator.SetActive(true);
         for (int i = 1; i < stack.Count;i++)
         {
@@ -163,6 +152,20 @@ public class Collect : MonoBehaviour
             Destroy(ball.GetComponent<Rigidbody>());
         }
         Movement.Instance.stopForwardMovement = false;
-        
     }
+
+    public void EnemySlideToTheBall(GameObject ball)
+    {
+        /*
+         *   Vector3 targetPos = ball.transform.position;
+          Destroy(ball.GetComponent<CollisionWithBall>());
+          Destroy(ball.GetComponent<Rigidbody>());
+          stack.Remove(ball);
+          targetPos.x -= 3;
+          ball.transform.DOLocalJump(targetPos,1,3,0.1f);*/
+           stack.Remove(ball);
+        Destroy(ball);
+
+    }
+    
 }

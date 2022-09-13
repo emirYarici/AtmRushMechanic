@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     private Camera cam;
     GameObject firstCube;
     public bool stopForwardMovement = false;
-    private bool stopSideMovement = false;
+    public bool stopSideMovement = false;
     Vector3 cursor_pos;
     Vector3 start_pos;
     public bool isTouching = false;
@@ -87,11 +87,7 @@ public class Movement : MonoBehaviour
 
 
 
-    public void StopMovement()
-    {
-        stopSideMovement = true;
-        stopForwardMovement = true;
-    }
+ 
 
     public void GoBackAndSpread()
     {
